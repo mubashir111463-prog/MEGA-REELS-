@@ -1,36 +1,202 @@
-# This is a basic workflow to help you get started with Actions
 
-name: CI
+# MEGA REELS
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+Watch • Create • Share
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+MEGA REELS is a responsive short-video website.
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+## Features
+- Home Feed
+- Search Bar
+- Trending Topics
+- Video Upload Preview
+- Like Button
+- Creator Profile
+- Mobile Responsive Design
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+## Installation
+1. Download the repository.
+2. Open index.html in your browser.
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+## Technologies
+- HTML
+- CSS
+- JavaScript
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEGA REELS</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+<h2>MEGA REELS</h2>
+<input id="searchInput" placeholder="Search videos...">
+<button id="loginBtn">Login</button>
+</header>
+
+<main>
+<aside>
+<h3>Menu</h3>
+<p>🏠 Home</p>
+<p>🔥 Trending</p>
+<p>❤️ Following</p>
+<p>👤 Profile</p>
+<button id="uploadBtn">＋ Upload Video</button>
+<input type="file" id="fileInput" accept="video/*" hidden>
+</aside>
+
+<section class="feed">
+<h1>Watch. Create. Share.</h1>
+<h3>Trending Videos</h3>
+
+<div class="video-card">
+<video id="videoPlayer" controls></video>
+<h3>MEGA REELS Creator</h3>
+<p>Welcome to MEGA REELS!</p>
+<button class="like">♡ Like</button>
+<button id="shareBtn">↗ Share</button>
+</div>
+</section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #0d0d11;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.topbar {
+  background: #18181f;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.topbar h2 {
+  color: #ff3155;
+}
+
+input {
+  padding: 12px;
+  border-radius: 20px;
+  border: none;
+}
+
+button {
+  padding: 10px 18px;
+  background: #e52d48;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+main {
+  display: flex;
+  gap: 25px;
+  padding: 25px;
+}
+
+aside {
+  width: 200px;
+}
+
+aside p {
+  padding: 12px;
+  background: #202029;
+  border-radius: 10px;
+}
+
+.feed {
+  width: 100%;
+  max-width: 650px;
+}
+
+.video-card {
+  background: #202029;
+  padding: 15px;
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+video {
+  width: 100%;
+  max-height: 500px;
+  background: black;
+  border-radius: 12px;
+}
+
+@media(max-width:600px) {
+  main {
+    padding: 12px;
+  }
+
+  aside {
+    display: none;
+  }
+
+  .topbar h2 {
+    font-size: 16px;
+  }
+
+  .topbar input {
+    width: 45%;
+  }
+}
+
+const uploadBtn = document.getElementById("uploadBtn");
+const fileInput = document.getElementById("fileInput");
+const videoPlayer = document.getElementById("videoPlayer");
+
+uploadBtn.addEventListener("click", () => {
+  fileInput.click();
+});
+
+fileInput.addEventListener("change", () => {
+  const file = fileInput.files[0];
+
+  if (file) {
+    videoPlayer.src = URL.createObjectURL(file);
+    videoPlayer.play();
+  }
+});
+
+document.getElementById("loginBtn").onclick = () => {
+  alert("Login feature coming soon!");
+};
+
+document.querySelector(".like").onclick = function() {
+  this.textContent =
+    this.textContent.includes("♡") ? "♥ Liked" : "♡ Like";
+};
+
+document.getElementById("shareBtn").onclick = async () => {
+  if (navigator.share) {
+    await navigator.share({
+      title: "MEGA REELS",
+      text: "Watch videos on MEGA REELS!"
+    });
+  } else {
+    alert("Sharing is not supported on this browser.");
+  }
+};
+
+document.getElementById("searchInput").addEventListener("input", e => {
+  console.log("Search:", e.target.value);
+});
